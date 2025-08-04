@@ -50,4 +50,5 @@ For Each profFolder in userData.SubFolders
 	End If
 Next
 
-x = msgbox("The following WebApp shortcuts have been created:" + appList,22,"Supermium Vista WebApps Updater")
+
+x = msgbox("The following WebApp shortcuts have been created:" + appList,64,"Supermium Vista WebApps Updater")
