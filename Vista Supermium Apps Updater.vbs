@@ -3,19 +3,19 @@ On Error Resume Next
 Set oShell   = WScript.CreateObject("WScript.Shell")
 Set fso      = CreateObject("Scripting.FileSystemObject")
 
+localappdata = oShell.ExpandEnvironmentStrings("%localappdata%")
+appdata      = oShell.ExpandEnvironmentStrings("%appdata%")
+
+Set userData = fso.GetFolder(localappdata + "\Supermium\User Data\")
+
 Function CreateShortcut
-	sLinkFile = appdata + "\Microsoft\Windows\Start Menu\Programs\Supermium Apps\" + name + ".lnk"
+	sLinkFile = appdata + "\Microsoft\Windows\Start Menu\Programs\Supermium Apps\" + name + " (" + profile + ").lnk"
 	Set oLink = oShell.CreateShortcut(sLinkFile)
 		oLink.TargetPath   = "C:\Program Files\Supermium\chrome_proxy.exe"
 		oLink.Arguments    = "--profile-directory=""" + profile + """ --app-id=" + appid
 		oLink.IconLocation = localappdata + "\Supermium\User Data\" + profile + "\Web Applications\_crx_" + appid + "\" + name + ".ico"
 	oLink.Save
 End Function
-
-localappdata = oShell.ExpandEnvironmentStrings("%localappdata%")
-appdata      = oShell.ExpandEnvironmentStrings("%appdata%")
-
-Set userData = fso.GetFolder(localappdata + "\Supermium\User Data\")
 
 appList     = ""
 prevProfile = ""
@@ -49,6 +49,5 @@ For Each profFolder in userData.SubFolders
 		Next
 	End If
 Next
-
 
 x = msgbox("The following WebApp shortcuts have been created:" + appList,64,"Supermium Vista WebApps Updater")
