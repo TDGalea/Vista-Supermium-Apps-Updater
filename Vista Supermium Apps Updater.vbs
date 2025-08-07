@@ -9,7 +9,11 @@ appdata      = oShell.ExpandEnvironmentStrings("%appdata%")
 Set userData = fso.GetFolder(localappdata + "\Supermium\User Data\")
 
 Function CreateShortcut
-	sLinkFile = appdata + "\Microsoft\Windows\Start Menu\Programs\Supermium Apps\" + name + " (" + profile + ").lnk"
+	If profile = "Default" Then
+		sLinkFile = appdata + "\Microsoft\Windows\Start Menu\Programs\Supermium Apps\" + name + ".lnk"
+	Else
+		sLinkFile = appdata + "\Microsoft\Windows\Start Menu\Programs\Supermium Apps\" + name + " (" + profile + ").lnk"
+	End If
 	Set oLink = oShell.CreateShortcut(sLinkFile)
 		oLink.TargetPath   = "C:\Program Files\Supermium\chrome_proxy.exe"
 		oLink.Arguments    = "--profile-directory=""" + profile + """ --app-id=" + appid
